@@ -1,0 +1,62 @@
+project_name: ScreenMon Dev
+log_level: INFO
+
+capture:
+  interval_seconds: 60
+  monitor_start_time: "00:00"
+  monitor_end_time: "23:59"
+  screenshot_dir: data/screenshots
+  image_format: PNG
+  image_quality: 85
+  max_width: 1600
+  monitors: all
+  default_camera: auto
+  idle_skip_enabled: true
+  idle_similarity_percent: 98
+  idle_changed_percent: 1
+  idle_consecutive_frames: 1
+  idle_diff_pixel_threshold: 20
+  idle_compare_width: 320
+  idle_compare_height: 180
+
+llm:
+  provider: mock
+  api_key: ""
+  api_base: https://api.openai.com/v1
+  model: gpt-4o-mini
+  screenshot_prompt1: ""
+  photo_prompt2: ""
+  log_analysis_prompt3: "你是日报汇总助手。请基于用户当天的有效解读日志，生成结构化中文日报，包含：1) 今日主要工作主题；2) 关键任务与进展；3) 潜在风险与问题；4) 明日建议。"
+  max_tokens: 1200
+  max_retries: 3
+  timeout_seconds: 45
+
+storage:
+  database_path: data/monitor.db
+  log_dir: data/logs
+  log_retention_days: 30
+  screenshot_retention_days: 7
+
+email:
+  enabled: false
+  smtp_host: smtp.example.com
+  smtp_port: 587
+  use_tls: true
+  use_ssl: false
+  username: bot@example.com
+  password: app-password
+  from_addr: bot@example.com
+  to_addrs:
+    - owner@example.com
+  send_time: "23:00"
+  subject: "[ScreenMon] 每日活动摘要"
+  attach_top_screenshots: 3
+
+retry:
+  max_attempts: 3
+  backoff_seconds: 5
+
+report:
+  timezone: local
+  summary_limit: 10
+
