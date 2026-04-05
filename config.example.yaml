@@ -1,32 +1,40 @@
-project_name: ScreenMon Dev
+project_name: ScreenMon
 log_level: INFO
 
 capture:
-  interval_seconds: 60
-  monitor_start_time: "00:00"
-  monitor_end_time: "23:59"
+  interval_seconds: 180
+  monitor_start_time: "07:00"
+  monitor_end_time: "23:40"
   screenshot_dir: data/screenshots
+  photo_dir: data/photo
   image_format: PNG
-  image_quality: 85
-  max_width: 1600
+  image_quality: 89
+  max_width: 3000
   monitors: all
-  default_camera: auto
+  default_camera: "0"
   idle_skip_enabled: true
-  idle_similarity_percent: 98
+  idle_similarity_percent: 80
   idle_changed_percent: 1
   idle_consecutive_frames: 1
   idle_diff_pixel_threshold: 20
   idle_compare_width: 320
   idle_compare_height: 180
+  photo_idle_skip_enabled: true
+  photo_idle_similarity_percent: 60
+  photo_idle_changed_percent: 1
+  photo_idle_consecutive_frames: 1
+  photo_idle_diff_pixel_threshold: 20
+  photo_idle_compare_width: 320
+  photo_idle_compare_height: 180
 
 llm:
-  provider: mock
-  api_key: ""
-  api_base: https://api.openai.com/v1
-  model: gpt-4o-mini
-  screenshot_prompt1: ""
-  photo_prompt2: ""
-  log_analysis_prompt3: "你是日报汇总助手。请基于用户当天的有效解读日志，生成结构化中文日报，包含：1) 今日主要工作主题；2) 关键任务与进展；3) 潜在风险与问题；4) 明日建议。"
+  provider: Qwen
+  api_key: "your_api_key_here"
+  api_base: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+  model: "qwen-vl-plus"
+  screenshot_prompt1: "你是一名桌面活动审计助手，你仔细查看这个屏幕截图，详细说明用户正在做的事，并提取关键信息。不要添加MD格式字符。"
+  photo_prompt2: "你是一名照片分析助手，你分析用户现在在干什么，在对着电脑工作，还是在看手机，在分析文件，还是没有电脑前面等等与用户有关的，用户在做什么。不解析用户衣着，不解析背景，只解析用户在做什么，表情，神态，动作。用户不是面向摄像头的，一般是面向的屏幕。"
+  log_analysis_prompt3: "你是日报汇总助手。请基于用户当天的有效解读日志，生成结构化中文日报，包含：1) 今日主要工作主题；2) 关键任务与进展；3) 潜在风险与问题。"
   max_tokens: 1200
   max_retries: 3
   timeout_seconds: 45
@@ -39,18 +47,18 @@ storage:
 
 email:
   enabled: false
-  smtp_host: smtp.example.com
+  smtp_host: "smtp.example.com"
   smtp_port: 587
   use_tls: true
-  use_ssl: false
-  username: bot@example.com
-  password: app-password
-  from_addr: bot@example.com
+  use_ssl: true
+  username: "your_email@example.com"
+  password: "your_email_password"
+  from_addr: "your_email@example.com"
   to_addrs:
-    - owner@example.com
-  send_time: "23:00"
+    - "recipient@example.com"
+  send_time: "23:50"
   subject: "[ScreenMon] 每日活动摘要"
-  attach_top_screenshots: 3
+  attach_top_screenshots: 1
 
 retry:
   max_attempts: 3
@@ -59,4 +67,3 @@ retry:
 report:
   timezone: local
   summary_limit: 10
-
